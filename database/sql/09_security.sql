@@ -24,9 +24,26 @@ TO fincontrol_leitura, fincontrol_operacao;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO fincontrol_leitura;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fincontrol_leitura;
 
--- Perfil operacional: leitura geral e escrita controlada nas movimentações.
+-- Perfil operacional: consulta geral e inclusão de movimentações.
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO fincontrol_operacao;
-GRANT INSERT, UPDATE ON transacao, pagamento TO fincontrol_operacao;
+
+-- O usuário operacional não recebe UPDATE no status nem no valor da transação.
+-- O status é calculado pelos triggers após a inclusão/alteração de pagamentos.
+GRANT INSERT (
+    id_empresa, id_centro_custo, id_categoria, id_usuario,
+    descricao, tipo, valor, data_competencia, data_vencimento
+) ON transacao TO fincontrol_operacao;
+
+GRANT UPDATE (descricao, data_competencia, data_vencimento)
+ON transacao TO fincontrol_operacao;
+
+GRANT INSERT (
+    id_empresa, id_transacao, id_conta, valor_pago, data_pagamento
+) ON pagamento TO fincontrol_operacao;
+
+GRANT UPDATE (id_conta, valor_pago, data_pagamento)
+ON pagamento TO fincontrol_operacao;
+
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fincontrol_operacao;
 
 -- Permissões padrão para novas tabelas criadas pelo usuário executor.
