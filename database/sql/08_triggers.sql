@@ -58,7 +58,39 @@ BEFORE INSERT OR UPDATE ON pagamento
 FOR EACH ROW
 EXECUTE FUNCTION fn_validar_pagamento();
 
--- 2. Recalcula o status após inserir, alterar ou excluir um pagamento.
+-- 2. Impede reduzir o valor de uma transação abaixo do total já pago.
+CREATE OR REPLACE FUNCTION fn_validar_valor_transacao()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_total_pago NUMERIC(15,2);
+BEGIN
+    IF NEW.valor IS DISTINCT FROM OLD.valor THEN
+        SELECT COALESCE(SUM(valor_pago), 0)
+          INTO v_total_pago
+        FROM pagamento
+        WHERE id_empresa = OLD.id_empresa
+          AND id_transacao = OLD.id_transacao;
+
+        IF NEW.valor < v_total_pago THEN
+            RAISE EXCEPTION
+                'O novo valor da transação (%) não pode ser inferior ao total já pago (%).',
+                NEW.valor, v_total_pago;
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_transacao_validar_valor ON transacao;
+CREATE TRIGGER trg_transacao_validar_valor
+BEFORE UPDATE OF valor ON transacao
+FOR EACH ROW
+EXECUTE FUNCTION fn_validar_valor_transacao();
+
+-- 3. Recalcula o status após inserir, alterar ou excluir um pagamento.
 CREATE OR REPLACE FUNCTION fn_recalcular_status_transacao()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -120,7 +152,7 @@ AFTER INSERT OR UPDATE OR DELETE ON pagamento
 FOR EACH ROW
 EXECUTE FUNCTION fn_recalcular_status_transacao();
 
--- 3. Auditoria automática de alterações em transacao e pagamento.
+-- 4. Auditoria automática de alterações em transacao e pagamento.
 -- SECURITY DEFINER permite inserir em auditoria sem conceder INSERT direto
 -- nesse histórico ao usuário operacional.
 CREATE OR REPLACE FUNCTION fn_registrar_auditoria()
@@ -136,7 +168,6 @@ DECLARE
     v_id_usuario BIGINT;
     v_registro_id BIGINT;
     v_usuario_texto TEXT;
-    v_registro_texto TEXT;
 BEGIN
     IF TG_OP = 'DELETE' THEN
         v_anterior := to_jsonb(OLD);
@@ -159,16 +190,19 @@ BEGIN
         v_anterior ->> 'id_usuario',
         NULLIF(current_setting('app.user_id', TRUE), '')
     );
-
-    v_registro_texto := COALESCE(
-        v_novo ->> 'id_transacao',
-        v_novo ->> 'id_pagamento',
-        v_anterior ->> 'id_transacao',
-        v_anterior ->> 'id_pagamento'
-    );
-
     v_id_usuario := NULLIF(v_usuario_texto, '')::BIGINT;
-    v_registro_id := v_registro_texto::BIGINT;
+
+    IF TG_TABLE_NAME = 'transacao' THEN
+        v_registro_id := COALESCE(
+            (v_novo ->> 'id_transacao')::BIGINT,
+            (v_anterior ->> 'id_transacao')::BIGINT
+        );
+    ELSIF TG_TABLE_NAME = 'pagamento' THEN
+        v_registro_id := COALESCE(
+            (v_novo ->> 'id_pagamento')::BIGINT,
+            (v_anterior ->> 'id_pagamento')::BIGINT
+        );
+    END IF;
 
     INSERT INTO public.auditoria (
         id_empresa, id_usuario, tabela_afetada, operacao,
