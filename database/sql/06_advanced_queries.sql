@@ -82,7 +82,24 @@ SELECT
 FROM transacao
 WHERE tipo = 'DESPESA';
 
--- 6. LAG: comparar cada transação com a anterior por data.
+-- 6. PARTITION BY: mostra cada despesa e o total do respectivo departamento.
+SELECT
+    t.descricao,
+    d.nome AS departamento,
+    t.valor,
+    SUM(t.valor) OVER (
+        PARTITION BY d.id_departamento
+    ) AS total_departamento
+FROM transacao t
+JOIN centro_custo cc
+    ON cc.id_empresa = t.id_empresa
+   AND cc.id_centro_custo = t.id_centro_custo
+JOIN departamento d
+    ON d.id_empresa = cc.id_empresa
+   AND d.id_departamento = cc.id_departamento
+WHERE t.tipo = 'DESPESA';
+
+-- 7. LAG: comparar cada transação com a anterior por data.
 SELECT
     descricao,
     data_competencia,
@@ -94,7 +111,7 @@ SELECT
 FROM transacao
 ORDER BY data_competencia, id_transacao;
 
--- 7. Soma acumulada das despesas por data.
+-- 8. Soma acumulada das despesas por data.
 SELECT
     descricao,
     data_competencia,
