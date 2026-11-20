@@ -27,6 +27,10 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fincontrol_leitura;
 -- Perfil operacional: consulta geral e inclusão de movimentações.
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO fincontrol_operacao;
 
+-- Remove concessões amplas de execuções anteriores do script antes de
+-- aplicar permissões por coluna (o script pode ser executado novamente).
+REVOKE INSERT, UPDATE ON transacao, pagamento FROM fincontrol_operacao;
+
 -- O usuário operacional não recebe UPDATE no status nem no valor da transação.
 -- O status é calculado pelos triggers após a inclusão/alteração de pagamentos.
 GRANT INSERT (
