@@ -94,7 +94,9 @@ EXECUTE FUNCTION fn_validar_valor_transacao();
 CREATE OR REPLACE FUNCTION fn_recalcular_status_transacao()
 RETURNS TRIGGER
 LANGUAGE plpgsql
-AS $$
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $
 DECLARE
     v_id_empresa BIGINT;
     v_id_transacao BIGINT;
