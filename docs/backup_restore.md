@@ -16,6 +16,13 @@ pg_dump -h localhost -p 5432 -U postgres -F c -b -v -f ".\backup\fincontrol.back
 O formato customizado (-F c) permite restaurar com pg_restore.
 O PostgreSQL solicitará a senha do usuário.
 
+Se pg_dump ou pg_restore não forem reconhecidos no terminal, use os executáveis
+da pasta bin da versão instalada, por exemplo:
+
+~~~powershell
+& "C:\Program Files\PostgreSQL\19\bin\pg_restore.exe" -h localhost -p 5432 -U postgres -d fincontrol_teste_restore -v ".\backup\fincontrol.backup"
+~~~
+
 Se pg_dump não for reconhecido no terminal, use o executável da pasta bin
 da versão instalada, por exemplo:
 
