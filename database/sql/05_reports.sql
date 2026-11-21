@@ -1,7 +1,7 @@
 -- FinControl | Consultas de relatórios
 -- Execute conectado ao banco fincontrol, depois de executar 03_views.sql.
 
--- 1. Despesas registradas por departamento no período.
+-- 1. Despesas registradas por departamento no período de demonstração (novembro de 2026).
 SELECT
     d.nome AS departamento,
     SUM(t.valor) AS total_despesas
