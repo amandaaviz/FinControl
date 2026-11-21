@@ -23,6 +23,11 @@ de desempenho:
 - 06_advanced_queries.sql: JOIN, GROUP BY, HAVING, subconsulta, CTE e Window Functions.
 - 07_performance.sql: exemplos de EXPLAIN ANALYZE, índices e estatísticas do PostgreSQL.
 
+**Nota da revisão final:** após os testes iniciais, o arquivo 06_advanced_queries.sql
+recebeu filtros explícitos para excluir transações canceladas das consultas
+específicas de despesas. Ao atualizar a cópia local do projeto, execute esse
+arquivo novamente. Ele contém apenas consultas SELECT e não altera os dados.
+
 ## 3. Triggers e regras de negócio
 
 Foram verificados os seguintes comportamentos:
