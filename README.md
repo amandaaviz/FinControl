@@ -99,6 +99,14 @@ dados de demonstração, pois o script não foi projetado para carga repetida.
 - Grupos de permissões para consulta e operação.
 - Exemplos de transações SQL e procedimentos de backup/recuperação.
 
+## Modelo de dados
+
+O diagrama abaixo apresenta as dez entidades principais e seus relacionamentos.
+A definição e as observações de modelagem estão em
+[database/diagrams/der.md](database/diagrams/der.md).
+
+![Diagrama entidade-relacionamento do FinControl](docs/images/der-fincontrol.svg)
+
 ## Como executar a API
 
 A partir da pasta raiz do projeto, abra o terminal.
