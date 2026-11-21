@@ -63,4 +63,4 @@ VALUES
 (1, 5, 1, 42000.00, '2026-11-19');
 
 -- Os status iniciais foram definidos explicitamente para ilustrar os cenários.
--- Os triggers de 08_triggers.sql recalculam o status quando novos pagamentos são registrados.
+-- Os triggers de 08_triggers.sql recalculam o status quando pagamentos são inseridos, alterados ou excluídos.
