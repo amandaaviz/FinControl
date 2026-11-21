@@ -96,7 +96,7 @@ RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public, pg_temp
-AS $
+AS $status_fn$
 DECLARE
     v_id_empresa BIGINT;
     v_id_transacao BIGINT;
@@ -146,7 +146,7 @@ BEGIN
 
     RETURN NULL;
 END;
-$$;
+$status_fn$;
 
 DROP TRIGGER IF EXISTS trg_pagamento_recalcular_status ON pagamento;
 CREATE TRIGGER trg_pagamento_recalcular_status
