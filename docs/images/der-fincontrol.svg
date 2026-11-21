@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1420" viewBox="0 0 1900 1420" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama entidade-relacionamento do FinControl</title>
+  <desc id="desc">Modelo relacional com dez entidades: empresa, departamento, centro de custo, usuário, categoria, conta financeira, orçamento, transação, pagamento e auditoria.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f5f7fb}
+      .heading{font:700 38px Inter,Segoe UI,Arial,sans-serif;fill:#17243a}
+      .subheading{font:400 18px Inter,Segoe UI,Arial,sans-serif;fill:#5d6b80}
+      .card{fill:#fff;stroke:#cbd5e1;stroke-width:2;rx:15}
+      .cardhead{fill:#173b63;rx:15}
+      .cardheadtext{font:700 18px Inter,Segoe UI,Arial,sans-serif;fill:#fff;letter-spacing:.6px}
+      .field{font:400 16px Inter,Segoe UI,Arial,sans-serif;fill:#263448}
+      .key{font:700 13px Inter,Segoe UI,Arial,sans-serif;fill:#527094}
+      .edge{fill:none;stroke:#71839b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .edgeLabel{font:600 14px Inter,Segoe UI,Arial,sans-serif;fill:#34465e}
+      .pill{fill:#e9eff7;stroke:#c9d6e6;stroke-width:1}
+      .legend{font:500 15px Inter,Segoe UI,Arial,sans-serif;fill:#4b5b70}
+      .footer{font:400 14px Inter,Segoe UI,Arial,sans-serif;fill:#718096}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#71839b"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1900" height="1420"/>
+  <text class="heading" x="80" y="78">FinControl · Modelo Entidade-Relacionamento</text>
+  <text class="subheading" x="80" y="112">Visão lógica das 10 tabelas e seus principais relacionamentos no PostgreSQL</text>
+
+  <!-- Relationship connectors, drawn behind entities -->
+  <g class="edge" marker-end="url(#arrow)">
+    <!-- Empresa to the four organizational / master entities -->
+    <path d="M950 230 V280 H255 V350"/>
+    <path d="M950 230 V305 H675 V350"/>
+    <path d="M950 230 V280 H1095 V350"/>
+    <path d="M1050 205 H1515 V350"/>
+    <!-- Department to cost center and user -->
+    <path d="M255 535 V700"/>
+    <path d="M410 430 H520"/>
+    <!-- Cost center to budget and transaction -->
+    <path d="M410 790 H520"/>
+    <path d="M255 860 V940 H1080 V805"/>
+    <!-- Category to budget and transaction -->
+    <path d="M1095 535 V615 H675 V700"/>
+    <path d="M1160 535 V700"/>
+    <!-- User to transaction and audit -->
+    <path d="M675 555 V625 H1040 V700"/>
+    <path d="M675 555 V1010"/>
+    <!-- Transaction to payment; account to payment -->
+    <path d="M1270 810 H1430 V1000"/>
+    <path d="M1515 535 V900 H1580 V1000"/>
+    <!-- Company to audit -->
+    <path d="M800 160 H55 V1110 H520"/>
+  </g>
+
+  <!-- Relationship labels -->
+  <g>
+    <rect class="pill" x="465" y="264" width="90" height="28" rx="14"/><text class="edgeLabel" x="510" y="283" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="720" y="292" width="90" height="28" rx="14"/><text class="edgeLabel" x="765" y="311" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="1110" y="264" width="90" height="28" rx="14"/><text class="edgeLabel" x="1155" y="283" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="1285" y="186" width="90" height="28" rx="14"/><text class="edgeLabel" x="1330" y="205" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="265" y="605" width="90" height="28" rx="14"/><text class="edgeLabel" x="310" y="624" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="420" y="390" width="90" height="28" rx="14"/><text class="edgeLabel" x="465" y="409" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="420" y="762" width="90" height="28" rx="14"/><text class="edgeLabel" x="465" y="781" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="735" y="598" width="90" height="28" rx="14"/><text class="edgeLabel" x="780" y="617" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="1170" y="603" width="90" height="28" rx="14"/><text class="edgeLabel" x="1215" y="622" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="890" y="610" width="90" height="28" rx="14"/><text class="edgeLabel" x="935" y="629" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="690" y="830" width="90" height="28" rx="14"/><text class="edgeLabel" x="735" y="849" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="1300" y="852" width="90" height="28" rx="14"/><text class="edgeLabel" x="1345" y="871" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="1560" y="850" width="90" height="28" rx="14"/><text class="edgeLabel" x="1605" y="869" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="275" y="1068" width="90" height="28" rx="14"/><text class="edgeLabel" x="320" y="1087" text-anchor="middle">1 : N</text>
+  </g>
+
+  <!-- COMPANY -->
+  <g transform="translate(800 70)">
+    <rect class="card" width="300" height="160"/>
+    <rect class="cardhead" width="300" height="42"/>
+    <text class="cardheadtext" x="18" y="28">EMPRESA</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_empresa</text>
+    <text class="field" x="18" y="98">razao_social</text>
+    <text class="field" x="18" y="124">nome_fantasia</text>
+    <text class="field" x="18" y="148">cnpj</text>
+  </g>
+
+  <!-- DEPARTMENT -->
+  <g transform="translate(100 350)">
+    <rect class="card" width="310" height="185"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">DEPARTAMENTO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_departamento</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="field" x="18" y="126">nome</text>
+    <text class="footer" x="18" y="160">Unidade organizacional</text>
+  </g>
+
+  <!-- USER -->
+  <g transform="translate(520 350)">
+    <rect class="card" width="310" height="205"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">USUARIO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_usuario</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="key" x="18" y="126">FK</text><text class="field" x="58" y="126">id_departamento (opcional)</text>
+    <text class="field" x="18" y="154">nome · email</text>
+    <text class="field" x="18" y="182">perfil · ativo</text>
+  </g>
+
+  <!-- CATEGORY -->
+  <g transform="translate(940 350)">
+    <rect class="card" width="310" height="185"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">CATEGORIA</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_categoria</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="field" x="18" y="126">nome</text>
+    <text class="field" x="18" y="154">tipo · ativa</text>
+  </g>
+
+  <!-- ACCOUNT -->
+  <g transform="translate(1360 350)">
+    <rect class="card" width="310" height="185"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">CONTA_FINANCEIRA</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_conta</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="field" x="18" y="126">nome · banco</text>
+    <text class="field" x="18" y="154">saldo_inicial · ativa</text>
+  </g>
+
+  <!-- COST CENTER -->
+  <g transform="translate(100 700)">
+    <rect class="card" width="310" height="190"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">CENTRO_CUSTO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_centro_custo</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="key" x="18" y="126">FK</text><text class="field" x="58" y="126">id_departamento</text>
+    <text class="field" x="18" y="154">codigo · nome</text>
+    <text class="field" x="18" y="180">descricao</text>
+  </g>
+
+  <!-- BUDGET -->
+  <g transform="translate(520 700)">
+    <rect class="card" width="310" height="190"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">ORCAMENTO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_orcamento</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="key" x="18" y="126">FK</text><text class="field" x="58" y="126">id_centro_custo · id_categoria</text>
+    <text class="field" x="18" y="154">ano · mes</text>
+    <text class="field" x="18" y="180">valor_previsto</text>
+  </g>
+
+  <!-- TRANSACTION -->
+  <g transform="translate(940 700)">
+    <rect class="card" width="330" height="220"/>
+    <rect class="cardhead" width="330" height="42"/>
+    <text class="cardheadtext" x="18" y="28">TRANSACAO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_transacao</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="key" x="18" y="126">FK</text><text class="field" x="58" y="126">id_centro_custo · id_categoria</text>
+    <text class="key" x="18" y="154">FK</text><text class="field" x="58" y="154">id_usuario</text>
+    <text class="field" x="18" y="182">descricao · tipo · valor</text>
+    <text class="field" x="18" y="208">data_competencia · status</text>
+  </g>
+
+  <!-- AUDIT -->
+  <g transform="translate(520 1040)">
+    <rect class="card" width="350" height="205"/>
+    <rect class="cardhead" width="350" height="42"/>
+    <text class="cardheadtext" x="18" y="28">AUDITORIA</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_auditoria</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa · id_usuario</text>
+    <text class="field" x="18" y="126">tabela_afetada · operacao</text>
+    <text class="field" x="18" y="154">registro_id · data_operacao</text>
+    <text class="field" x="18" y="182">dados_anteriores · dados_novos</text>
+  </g>
+
+  <!-- PAYMENT -->
+  <g transform="translate(1420 1000)">
+    <rect class="card" width="310" height="190"/>
+    <rect class="cardhead" width="310" height="42"/>
+    <text class="cardheadtext" x="18" y="28">PAGAMENTO</text>
+    <text class="key" x="18" y="70">PK</text><text class="field" x="58" y="70">id_pagamento</text>
+    <text class="key" x="18" y="98">FK</text><text class="field" x="58" y="98">id_empresa</text>
+    <text class="key" x="18" y="126">FK</text><text class="field" x="58" y="126">id_transacao · id_conta</text>
+    <text class="field" x="18" y="154">valor_pago</text>
+    <text class="field" x="18" y="180">data_pagamento</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(100 1300)">
+    <text class="legend" x="0" y="0">PK = chave primária</text>
+    <text class="legend" x="210" y="0">FK = chave estrangeira</text>
+    <text class="legend" x="460" y="0">1 : N = um registro relacionado a vários registros</text>
+    <text class="footer" x="0" y="42">Observação: relacionamentos financeiros também carregam id_empresa para manter a integridade entre organizações.</text>
+  </g>
+</svg>
