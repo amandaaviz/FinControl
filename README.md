@@ -146,6 +146,20 @@ Endpoints iniciais:
 - GET /departments: lista departamentos.
 - GET /transactions: lista transações; aceita o parâmetro limit entre 1 e 200.
 
+## Demonstração da API
+
+As imagens abaixo registram uma execução local do endpoint de consulta de
+transações pela documentação interativa do FastAPI (Swagger UI). O endpoint
+retornou HTTP 200 e os registros fictícios cadastrados no banco.
+
+**GET /transactions — resposta (parte 1)**
+
+![Resposta da API com transações - parte 1](docs/images/transactions-1.png)
+
+**GET /transactions — resposta (parte 2)**
+
+![Resposta da API com transações - parte 2](docs/images/transactions-2.png)
+
 ## Validação realizada
 
 Os testes funcionais da versão atual foram executados em ambiente local com
