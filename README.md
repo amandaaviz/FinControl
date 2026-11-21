@@ -73,8 +73,8 @@ No DBeaver, conecte-se ao servidor PostgreSQL usando um usuário administrador.
 1. Abra database/sql/01_create_database.sql conectado a outro banco, normalmente postgres, e execute para criar fincontrol.
 2. Abra uma conexão com o banco fincontrol.
 3. Execute 02_schema.sql para criar tabelas, constraints e índices iniciais.
+3. Execute 03_views.sql para criar as views.
 4. Execute 04_seed.sql para inserir os dados fictícios. Execute apenas uma vez em um banco recém-criado.
-5. Execute 03_views.sql para criar as views.
 6. Execute 05_reports.sql para consultar relatórios demonstrativos.
 7. Execute 06_advanced_queries.sql para exemplos de SQL avançado.
 8. Execute 07_performance.sql para analisar planos e estatísticas.
