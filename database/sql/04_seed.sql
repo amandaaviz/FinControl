@@ -62,5 +62,5 @@ VALUES
 (1, 3, 2, 4000.00, '2026-11-19'),
 (1, 5, 1, 42000.00, '2026-11-19');
 
--- Ajusta status da transação de infraestrutura para PARCIAL e receita para PAGO.
--- O seed ilustra os estados; regras automáticas de atualização serão implementadas em etapa posterior.
+-- Os status iniciais foram definidos explicitamente para ilustrar os cenários.
+-- Os triggers de 08_triggers.sql recalculam o status quando novos pagamentos são registrados.
