@@ -47,7 +47,12 @@ FinControl/
 │   ├── backup_restore.md
 │   ├── data_dictionary.md
 │   ├── decisions.md
-│   └── validation.md
+│   ├── validation.md
+│   └── images/
+│       ├── api-swagger.png
+│       ├── departments.png
+│       ├── transactions-1.png
+│       └── transactions-2.png
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -148,9 +153,16 @@ Endpoints iniciais:
 
 ## Demonstração da API
 
-As imagens abaixo registram uma execução local do endpoint de consulta de
-transações pela documentação interativa do FastAPI (Swagger UI). O endpoint
-retornou HTTP 200 e os registros fictícios cadastrados no banco.
+A API possui documentação interativa gerada pelo FastAPI (Swagger UI). Abaixo
+estão capturas da execução local e das respostas dos endpoints de consulta.
+
+**Visão geral da documentação interativa**
+
+![Documentação Swagger da API FinControl](docs/images/api-swagger.png)
+
+**GET /departments — departamentos cadastrados (HTTP 200)**
+
+![Resposta do endpoint de departamentos](docs/images/departments.png)
 
 **GET /transactions — resposta (parte 1)**
 
