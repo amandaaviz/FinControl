@@ -38,13 +38,13 @@
     <path d="M410 430 H520"/>
     <!-- Cost center to budget and transaction -->
     <path d="M410 790 H520"/>
-    <path d="M255 860 V940 H1080 V805"/>
+    <path d="M255 890 V950 H1100 V920"/>
     <!-- Category to budget and transaction -->
     <path d="M1095 535 V615 H675 V700"/>
     <path d="M1160 535 V700"/>
     <!-- User to transaction and audit -->
     <path d="M675 555 V625 H1040 V700"/>
-    <path d="M675 555 V1010"/>
+    <path d="M675 555 V1040"/>
     <!-- Transaction to payment; account to payment -->
     <path d="M1270 810 H1430 V1000"/>
     <path d="M1515 535 V900 H1580 V1000"/>
@@ -67,7 +67,7 @@
     <rect class="pill" x="690" y="830" width="90" height="28" rx="14"/><text class="edgeLabel" x="735" y="849" text-anchor="middle">1 : N</text>
     <rect class="pill" x="1300" y="852" width="90" height="28" rx="14"/><text class="edgeLabel" x="1345" y="871" text-anchor="middle">1 : N</text>
     <rect class="pill" x="1560" y="850" width="90" height="28" rx="14"/><text class="edgeLabel" x="1605" y="869" text-anchor="middle">1 : N</text>
-    <rect class="pill" x="275" y="1068" width="90" height="28" rx="14"/><text class="edgeLabel" x="320" y="1087" text-anchor="middle">1 : N</text>
+    <rect class="pill" x="275" y="1068" width="90" height="28" rx="14"/><text class="edgeLabel" x="320" y="1087" text-anchor="middle">0..N</text>
   </g>
 
   <!-- COMPANY -->
