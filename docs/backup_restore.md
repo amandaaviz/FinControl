@@ -43,12 +43,18 @@ existem se o script 09_security.sql tiver sido executado anteriormente.
 
 Um backup de banco feito com pg_dump não inclui, por padrão, a definição
 global dos papéis do servidor. Se o servidor de destino ainda não tiver os
-grupos usados pelo projeto, há duas opções:
+grupos usados pelo projeto, escolha uma destas opções:
 
-- Criar os grupos no banco de destino executando database/sql/09_security.sql
-  como administrador antes de restaurar os privilégios do arquivo.
-- Restaurar estrutura e dados sem proprietário nem ACLs, usando --no-owner
-  e --no-acl; depois executar 09_security.sql para recriar as permissões.
+- Antes do pg_restore, crie os papéis globais fincontrol_leitura e
+  fincontrol_operacao como NOLOGIN no servidor de destino. Depois restaure
+  o backup e execute 09_security.sql conectado ao banco restaurado para
+  aplicar as permissões do projeto.
+- Restaure estrutura e dados sem proprietário nem ACLs, usando --no-owner
+  e --no-acl. Depois execute 09_security.sql conectado ao banco restaurado
+  para criar os grupos e reaplicar as permissões.
+
+Não execute 09_security.sql antes de restaurar as tabelas: ele concede
+permissões sobre transacao, pagamento e outros objetos que precisam existir.
 
 Exemplo de restauração sem proprietário e sem ACLs:
 
