@@ -36,6 +36,7 @@ ORDER BY total DESC;
 SELECT descricao, valor, tipo
 FROM transacao
 WHERE tipo = 'DESPESA'
+  AND status <> 'CANCELADO'
   AND valor > (
       SELECT AVG(valor)
       FROM transacao
@@ -80,7 +81,8 @@ SELECT
     RANK() OVER (ORDER BY valor DESC) AS classificacao,
     DENSE_RANK() OVER (ORDER BY valor DESC) AS classificacao_densa
 FROM transacao
-WHERE tipo = 'DESPESA';
+WHERE tipo = 'DESPESA'
+  AND status <> 'CANCELADO';
 
 -- 6. PARTITION BY: mostra cada despesa e o total do respectivo departamento.
 SELECT
@@ -97,7 +99,8 @@ JOIN centro_custo cc
 JOIN departamento d
     ON d.id_empresa = cc.id_empresa
    AND d.id_departamento = cc.id_departamento
-WHERE t.tipo = 'DESPESA';
+WHERE t.tipo = 'DESPESA'
+  AND t.status <> 'CANCELADO';
 
 -- 7. LAG: comparar cada transação com a anterior por data.
 SELECT
