@@ -52,7 +52,8 @@ FinControl/
 │       ├── api-swagger.png
 │       ├── departments.png
 │       ├── transactions-1.png
-│       └── transactions-2.png
+│       ├── transactions-2.png
+│       └── der-fincontrol.svg
 ├── .env.example
 ├── .gitignore
 └── README.md
