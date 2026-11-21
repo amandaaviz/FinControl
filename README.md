@@ -8,7 +8,7 @@ Sistema de gestão e análise financeira para uma empresa privada de médio port
 
 O FinControl organiza departamentos, centros de custo, categorias, orçamentos,
 contas financeiras e movimentações. A versão de portfólio utiliza dados
-inteiramente fictícios.
+inteiramente fictícios e tem finalidade educacional.
 
 ## Tecnologias
 
@@ -46,7 +46,8 @@ FinControl/
 ├── docs/
 │   ├── backup_restore.md
 │   ├── data_dictionary.md
-│   └── decisions.md
+│   ├── decisions.md
+│   └── validation.md
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -75,9 +76,12 @@ No DBeaver, conecte-se ao servidor PostgreSQL usando um usuário administrador.
 10. Execute 09_security.sql conectado como administrador para criar os grupos de permissões.
 11. Execute 10_transactions.sql para demonstrar transações; o primeiro exemplo termina com ROLLBACK.
 
-Os scripts 02 a 10 devem ser executados no banco fincontrol. Os scripts de trigger
-e permissões são evoluções do projeto e devem ser aplicados depois de criar o
-schema e carregar os dados de demonstração.
+Os scripts de 02 a 10 devem ser executados no banco fincontrol. Os scripts de
+trigger e permissões são evoluções do projeto e devem ser aplicados depois de
+criar o schema e carregar os dados de demonstração.
+
+**Atenção:** não execute 04_seed.sql novamente em um banco que já contém os
+dados de demonstração, pois o script não foi projetado para carga repetida.
 
 ## Funcionalidades de banco de dados
 
@@ -92,18 +96,25 @@ schema e carregar os dados de demonstração.
 
 ## Como executar a API
 
-A partir da pasta raiz do projeto, abra o terminal:
+A partir da pasta raiz do projeto, abra o terminal.
+
+Git Bash:
+
+~~~bash
+cd backend
+python -m venv .venv
+source .venv/Scripts/activate
+pip install -r requirements.txt
+cp ../.env.example .env
+~~~
+
+PowerShell:
 
 ~~~powershell
 cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-~~~
-
-Copie o arquivo de exemplo para criar sua configuração local:
-
-~~~powershell
 Copy-Item ..\.env.example .env
 ~~~
 
@@ -113,9 +124,12 @@ Edite backend/.env e informe a senha do PostgreSQL na variável DATABASE_URL:
 DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/fincontrol
 ~~~
 
-Inicie a API:
+Se a senha contiver caracteres reservados em URLs (por exemplo, @), codifique
+esses caracteres na URL. Nunca publique o arquivo .env nem compartilhe a senha.
 
-~~~powershell
+Inicie a API, ainda dentro da pasta backend:
+
+~~~bash
 uvicorn app.main:app --reload
 ~~~
 
@@ -132,6 +146,12 @@ Endpoints iniciais:
 - GET /departments: lista departamentos.
 - GET /transactions: lista transações; aceita o parâmetro limit entre 1 e 200.
 
+## Validação realizada
+
+Os testes funcionais da versão atual foram executados em ambiente local com
+dados fictícios. Os resultados e procedimentos estão registrados em
+docs/validation.md.
+
 ## Backup e recuperação
 
 Consulte docs/backup_restore.md para criar um backup com pg_dump e testar
@@ -142,12 +162,14 @@ a restauração com pg_restore no Windows.
 - Diagrama entidade-relacionamento: database/diagrams/der.md
 - Dicionário de dados: docs/data_dictionary.md
 - Decisões de modelagem: docs/decisions.md
+- Registro de validação: docs/validation.md
+- Backup e recuperação: docs/backup_restore.md
 
 ## Limitações conhecidas
 
-- A API é inicial e somente leitura; ainda não possui autenticação.
+- A API é inicial e somente leitura; ainda não possui autenticação ou autorização no nível da aplicação.
 - A autorização do banco é demonstrada por grupos de permissões; usuários reais devem ser provisionados pelo administrador.
-- Os triggers são instalados pelo script próprio e precisam ser validados no banco local após a execução.
+- Os testes foram realizados em ambiente local de desenvolvimento. Antes de qualquer uso real, os scripts e permissões devem passar por revisão de segurança e testes adicionais.
 - Os índices iniciais são hipóteses que devem ser avaliadas com planos de execução e carga representativa.
 - O projeto não deve ser utilizado para registrar dados financeiros reais.
 
